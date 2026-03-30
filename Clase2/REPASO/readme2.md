@@ -1,4 +1,4 @@
-```markdown
+
 # REPASO CLASE 2: Métodos de Arrays en JavaScript
 
 Este documento resume los métodos más utilizados para manipular arrays en JavaScript, incluyendo su funcionamiento y ejemplos prácticos.
@@ -103,5 +103,5 @@ const numeros = [1, 2, 3, 4];
 // acumulador inicia en 0
 const suma = numeros.reduce((acumulador, n) => acumulador + n, 0);
 console.log(suma); // 10
-```
+
 ```
