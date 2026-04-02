@@ -76,6 +76,3 @@ en `ejemplo3.js`:
 - Mantén funciones puras cuando puedas.
 - Comenta el propósito de cada función.
 
----
-
-Si querés, puedo crear una plantilla de código con TODOs y comentarios para cada ejercicio (copy/paste directo).
