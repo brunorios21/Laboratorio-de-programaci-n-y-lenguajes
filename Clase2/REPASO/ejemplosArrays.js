@@ -34,4 +34,3 @@ const maximo = arr.reduce((a, b) => (a.valor > b.valor ? a : b)); // { nombre: "
 // Si no pasás valor inicial a reduce, a arranca siendo el primer elemento y b el segundo.
 console.log("Objeto con mayor valor:", maximo);
 
-// Última modificación: viernes, 27 de marzo de 2026, 10:49
