@@ -1,57 +1,96 @@
-//Sirve para crear un servidor web con Node.js y Express, que es un framework de aplicaciones web para Node.js. El código importa el módulo Express, que se utiliza para manejar las solicitudes HTTP y definir rutas en la aplicación web.
-const express = require('express');
-//Luego, se importa un archivo JSON que contiene datos de productos. Este archivo se encuentra en la carpeta "data" y se llama "productos.json". Al importar este archivo, se asigna su contenido a la variable "productos", lo que permite acceder a los datos de los productos en el código.
-const productos = require('./data/productos.json');
-//Luego, se crea una instancia de la aplicacion Express, que se asigna a la variable "app". Esta instancia se utilizará para configurar y manejar las rutas y solicitudes en el servidor web.
-const app = express();
-const PORT = 3000;
-//Funcion que se ejecuta cuando se recibe una solicitud GET a la ruta "/productos". Actualmente, el cuerpo de la función está vacío, lo que significa que no se ha definido ninguna lógica para manejar esta ruta específica. Sin embargo, esta es la estructura básica para definir una ruta en Express, y se puede agregar lógica adicional dentro de esta función para procesar la solicitud y enviar una respuesta adecuada al cliente.
-app.get('/productos', (req, res) => {
-   res.status(200).json(productos); 
-});
-app.get('/productos/categorias/find',(req,res)=>{
+// Se importa el módulo 'express' para poder crear y configurar nuestro servidor web.
+const express = require('express')
+
+// Se importan los datos del archivo JSON. 
+// Nota: Aquí 'productos' almacenará todo el contenido del archivo ubicado en la carpeta data.
+const productos = require('./data/productos.json')
+
+// Se inicializa la aplicación de express.
+const app = express()
+
+// Se define el puerto en el que correrá el servidor (en este caso el 3001).
+const PORT = 3001
+
+// RUTA 1: Obtener todos los productos.
+// Al acceder a 'http://localhost:3001/productos', el servidor responde con el JSON completo.
+app.get('/productos', (req, res)=>{
+   // res.status(200) indica que la operación fue exitosa. 
+   // .json(productos) envía el contenido de la variable 'productos' al cliente.
+   res.status(200).json(productos) 
+})
+
+// RUTA 2: Buscar productos por una categoría específica usando Query Params.
+// Se accede como: 'http://localhost:3001/productos/categorias/find?key=tecnologia'.
+app.get('/productos/categorias/find', (req, res)=>{
+    // Se captura el valor que viene después de '?key=' en la URL.
     const categorias = req.query.key
-    const resultado = productos.filter(p=>p.categorias===categorias);
+    
+    // .filter crea un nuevo array con todos los productos que coincidan con la categoría recibida.
+    const resultado = productos.filter(p=>p.categorias===categorias)
+    
+    // Se devuelve el array filtrado al cliente.
     res.status(200).json(resultado)
-   });
-//Luego,se define una ruta para obtener un producto específico por su ID. La ruta es "/productos/:idProducto", donde ":idProducto" es un parámetro de ruta que representa el ID del producto que se desea obtener. Dentro de la función de manejo de esta ruta, se extrae el valor del parámetro "idProducto" de la solicitud utilizando "req.params.idProducto". Luego, se busca el producto correspondiente en el array "productos" utilizando el método "find()". Si no se encuentra el producto, se devuelve una respuesta con un código de estado 404 y un mensaje de error. Si se encuentra el producto, se devuelve una respuesta con un código de estado 200 y los datos del producto en formato JSON.
-app.get('/productos/:idProducto', (req,res) => {
-    const id = req.params.idProducto;
-    if(isNaN(id)){
+})
+
+// RUTA 3: Obtener un producto específico mediante su ID (Parámetro de ruta).
+// Se accede como: 'http://localhost:3001/productos/3'.
+app.get('/productos/:idProducto', (req, res)=>{
+    // Se captura el ID que viene en la URL. IMPORTANTE: req.params siempre es un String.
+    const  id = req.params.idProducto
+    
+    // VALIDACIÓN: isNaN comprueba si lo que envió el usuario NO es un número.
+    if(isNaN(id)) {
+        // Si no es un número, responde con error 400 (Bad Request).
         res.status(400).json({
-            message: "El ID del producto debe ser numerico."
-        });
-        return;
+            message: "El id de producto debe ser numérico."
+        })
+        return // El return detiene la ejecución para que no intente seguir procesando.
     }
-    // Convertir el ID a un número entero
 
-    const producto = productos.find(p=>p.id===id)
-    if(!producto){
-        return res.status(404).json({
-            error: 'Producto no encontrado'})
+    // Se busca el primer producto cuyo ID coincida con el ID de la URL.
+    // Se usa Number(id) para transformar el String de la URL en un número y poder comparar correctamente.
+    const producto = productos.find(p=>p.id===Number(id))
+    
+    // Si .find no encuentra nada, la variable 'producto' será undefined.
+    if(!producto) {
+        // Responde con error 404 (Not Found).
+        res.status(404).json({
+            message: `El producto con id ${id} no se encuentra registrado`
+        })
+        return
     }
-    res.status(200).json(producto);
-
+    
+    // Si lo encontró, lo envía con estado 200.
+    res.status(200).json(producto)
 })
-//Luego, se define una ruta para obtener las categorías de los productos. La ruta es "/categorias". Dentro de la función de manejo de esta ruta, se utiliza el método "map()" para iterar sobre el array "productos" y extraer las categorías de cada producto. El resultado es un nuevo array que contiene solo las categorías. Finalmente, se devuelve una respuesta con un código de estado 200 y el array de categorías en formato JSON.
-app.get('/categorias',(req,res)=>{
-    const categorias = productos.map(p=>p.categorias);
-    // Eliminar categorías duplicadas utilizando reduce
-    const sinDuplicados = categorias.reduce((arr,elemento)=>{
-        if (!arr.includes(elemento)) {
-            arr.push(elemento);
+
+// RUTA 4: Obtener un listado de categorías únicas.
+app.get('/categorias', (req, res)=>{
+    // 1. .map crea un array que solo contiene los nombres de las categorías de cada producto.
+    // 2. .reduce se usa para "limpiar" los duplicados.
+    const categorias = productos.map(p=>p.categorias)
+    .reduce( (arr, ele)=>{
+        // Si el elemento (categoría) no está todavía en el nuevo array 'arr'...
+        if (!arr.includes(ele)) {
+            // ...se agrega al array.
+            arr.push(ele)
         }
-        return arr;
-    },[])
-    // 
-    res.status(200).json(sinDuplicados);
-    res.status(200).json(categorias);
+        // Se retorna el acumulador para la siguiente vuelta del ciclo.
+        return arr
+    }, [] ) // Se inicia el acumulador como un array vacío [].
+    
+    // Se envía el array de categorías sin repeticiones.
+    res.status(200).json(categorias)
 })
-//A continuación, se define una ruta para la raíz del sitio web ("/"). Cuando un cliente realiza una solicitud GET a esta ruta, el servidor responde con un mensaje de texto "¡Hola, mundo!" utilizando el método "res.send()".
-app.listen(PORT, (error) => {
-    if (error) {
-        console.error('Error al iniciar el servidor:', error);
-        process.exit(1);
+
+// ARRANQUE DEL SERVIDOR:
+// app.listen pone al servidor a "escuchar" peticiones en el puerto definido.
+app.listen(PORT, (err)=>{
+    // Si hay un error al intentar iniciar el servidor...
+    if(err) {
+        console.error(err.message)
+        process.exit(1) // Detiene el proceso de Node inmediatamente.
     }
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+    // Mensaje de confirmación en la consola del desarrollador.
+    console.log(`La apliacion esta escuchando en el puerto ${PORT}`)
+})
