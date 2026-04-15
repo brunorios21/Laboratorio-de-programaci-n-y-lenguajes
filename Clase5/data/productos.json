@@ -1,0 +1,79 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Procesador AMD Ryzen 5 5500",
+      "categoria": "Componentes",
+      "precio": 145000,
+      "stock": 12,
+      "disponible": true,
+      "descripcion": "6 núcleos y 12 hilos, frecuencia base de 3.6GHz. No incluye gráficos integrados.",
+      "imagen": "https://url-de-tu-imagen.com/ryzen5500.jpg",
+      "especificaciones": {
+        "socket": "AM4",
+        "consumo": "65W",
+        "arquitectura": "Zen 3"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "Memoria RAM DDR4 16GB (2x8GB) 3200MHz",
+      "categoria": "Memorias",
+      "precio": 68000,
+      "stock": 20,
+      "disponible": true,
+      "descripcion": "Kit de memoria dual channel con disipador térmico de aluminio.",
+      "imagen": "https://url-de-tu-imagen.com/ram16gb.jpg",
+      "especificaciones": {
+        "latencia": "CL16",
+        "voltaje": "1.35V",
+        "color": "Negro"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Disco SSD M.2 NVMe 1TB Kingston NV2",
+      "categoria": "Almacenamiento",
+      "precio": 85000,
+      "stock": 8,
+      "disponible": true,
+      "descripcion": "Almacenamiento de alta velocidad, lectura hasta 3500MB/s.",
+      "imagen": "https://url-de-tu-imagen.com/ssd1tb.jpg",
+      "especificaciones": {
+        "interfaz": "NVMe PCIe 4.0",
+        "formato": "M.2 2280",
+        "lectura": "3500 MB/s"
+      }
+    },
+    {
+      "id": 4,
+      "nombre": "Placa de Video NVIDIA RTX 3060 12GB",
+      "categoria": "Video",
+      "precio": 460000,
+      "stock": 4,
+      "disponible": true,
+      "descripcion": "Ideal para gaming en 1080p y 1440p con soporte para Ray Tracing.",
+      "imagen": "https://url-de-tu-imagen.com/rtx3060.jpg",
+      "especificaciones": {
+        "vram": "12GB GDDR6",
+        "bus": "192-bit",
+        "conectores": "1x 8-pin"
+      }
+    },
+    {
+      "id": 5,
+      "nombre": "Fuente de Poder 650W 80 Plus Bronze",
+      "categoria": "Fuentes",
+      "precio": 92000,
+      "stock": 15,
+      "disponible": true,
+      "descripcion": "Fuente certificada para garantizar eficiencia energética y seguridad.",
+      "imagen": "https://url-de-tu-imagen.com/fuente650.jpg",
+      "especificaciones": {
+        "certificacion": "80 Plus Bronze",
+        "modular": false,
+        "protecciones": ["OVP", "OPP", "SCP"]
+      }
+    }
+  ]
+}
