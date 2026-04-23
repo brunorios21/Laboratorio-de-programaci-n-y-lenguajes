@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "cod": "001",
+    "name": "laboratorio"
+  },
+  {
+    "id": 2,
+    "cod": "002",
+    "name": "fisica"
+  },
+  {
+    "id": 3,
+    "cod": "003",
+    "name": "quimica"
+  }
+]
