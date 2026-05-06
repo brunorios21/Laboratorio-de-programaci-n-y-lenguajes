@@ -77,7 +77,11 @@ const motos = [
   { id: 3, modelo: "Yamaha", km: 22000, estado: "Lista" },
   { id: 4, modelo: "Zanella", km: 8000, estado: "En Reparación" }
 ];
-
+const usuarios2 = [
+  { id: 1, nombre: "Carlos", rol: "Admin" },
+  { id: 2, nombre: "Ana", rol: "Usuario" },
+  { id: 3, nombre: "Lucía", rol: "Usuario" }
+];
 
 // Sumar el total de ventas pagadas cuyo monto no supere los 2000
 app.get('/ventas', (req, res) => {
@@ -326,6 +330,36 @@ app.get('/motos', (req,res) => {
     }); 
 
 });
+
+/* Consigna:
+Crea un endpoint GET /usuarios/:id que:
+
+Reciba el ID por parámetro y lo convierta a número (por ejemplo, Number(req.params.id)).
+
+Busque el usuario en el arreglo usuarios utilizando .find().
+
+Si el usuario existe, devuelva el objeto en formato JSON.
+
+Si no existe, devuelva un código de estado 404 con un mensaje de error en formato JSON.
+ */
+app.get('/usuarios2/:id', (req,res) => {
+    //Obtenemos el id de la ruta y lo convertimos a numero
+    const id = Number(req.params.id);
+    //Buscamos el usuario en el arreglo usuarios utilizando .find()
+    const usuarioEncontrado = usuarios2
+    .find(u => u.id === id);
+    if(!usuarioEncontrado) {
+        res.status(404).json({error: "Usuario no encontrado"});
+        return;
+    }
+    console.log("Usuario encontrado:", usuarioEncontrado);
+    res.json({
+        message: "Usuario encontrado:",
+        user: usuarioEncontrado
+    });
+});
+
+
 
 // Encendido del servidor
 app.listen(port, () => {
