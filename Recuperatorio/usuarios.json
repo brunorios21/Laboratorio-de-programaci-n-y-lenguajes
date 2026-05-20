@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bruno",
+    "sueldo": 1000,
+    "rol_id": 1
+  },
+  {
+    "id": 2,
+    "nombre": "Ana",
+    "sueldo": 1500,
+    "rol_id": 2
+  },
+  {
+    "id": 3,
+    "nombre": "Carlos",
+    "sueldo": 1200,
+    "rol_id": 1
+  },
+  {
+    "id": 4,
+    "nombre": "Maria",
+    "sueldo": 2000,
+    "rol_id": 2
+  }
+]
